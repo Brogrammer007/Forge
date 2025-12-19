@@ -1,0 +1,95 @@
+{
+  "name": "vectorforge",
+  "version": "1.0.1",
+  "description": "All-in-one image design utility: convert, edit, upscale, vectorize, build grids, and create GIFs. 100% local processing.",
+  "author": "Vuk",
+  "private": true,
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "dev:electron": "concurrently \"npm run dev\" \"wait-on http://localhost:3000 && electron electron/main.js\"",
+    "build:web": "next build",
+    "build:electron": "npm run build:web && tsc -p electron/tsconfig.json",
+    "dist": "npm run build:electron && electron-builder",
+    "dist:win": "node build-force.js",
+    "dist:mac": "npm run build:electron && electron-builder --mac",
+    "dist:mac:unpacked": "node create-icon-icns.js && node build-force-mac.js"
+  },
+  "dependencies": {
+    "@ffmpeg/ffmpeg": "^0.12.15",
+    "@ffmpeg/util": "^0.12.2",
+    "@imgly/background-removal": "^1.7.0",
+    "@tensorflow/tfjs": "^4.11.0",
+    "@upscalerjs/default-model": "^1.0.0-beta.17",
+    "@upscalerjs/esrgan-thick": "^1.0.0-beta.16",
+    "clsx": "^2.1.1",
+    "next": "14.2.18",
+    "pdfkit": "^0.15.1",
+    "pica": "^9.0.1",
+    "potrace": "^2.1.8",
+    "react": "^18.3.1",
+    "react-colorful": "^5.6.1",
+    "react-dom": "^18.3.1",
+    "react-dropzone": "^14.3.5",
+    "sharp": "^0.33.5",
+    "svg2img": "^1.0.0-beta.2",
+    "svgo": "^3.3.2",
+    "upscaler": "^1.0.0-beta.19",
+    "uuid": "^10.0.0",
+    "zustand": "^5.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "@types/pdfkit": "^0.13.5",
+    "@types/pica": "^9.0.5",
+    "@types/potrace": "^2.1.5",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/uuid": "^10.0.0",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.0",
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "14.2.18",
+    "png-to-ico": "^3.0.1",
+    "png2icons": "^2.0.1",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
+    "typescript": "^5.7.2",
+    "wait-on": "^8.0.1"
+  },
+  "build": {
+    "appId": "com.forge.app",
+    "productName": "Forge",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      ".next/**/*",
+      "public/**/*",
+      "electron/**/*.js",
+      "electron/**/*.html",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "public/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "public/icon.icns"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "asarUnpack": [
+      ".next/**/*",
+      "node_modules/**/*"
+    ]
+  }
+}

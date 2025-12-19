@@ -1,0 +1,194 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 24 24 27;
+    --foreground: 250 250 250;
+    --card: 39 39 42;
+    --card-hover: 52 52 59;
+    --border: 63 63 70;
+    --accent: 20 184 166;
+    --accent-hover: 13 148 136;
+  }
+
+  /* WOZNIAK MODE: macOS specific fixes */
+  * {
+    @apply border-zinc-800;
+    -webkit-user-select: auto !important;
+    -webkit-touch-callout: default !important;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: auto !important;
+  }
+
+  body {
+    @apply bg-zinc-950 text-zinc-100;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-user-select: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overflow: auto !important;
+    overflow-y: auto !important;
+    overflow-x: auto !important;
+  }
+  
+  html {
+    -webkit-user-select: auto !important;
+    overflow: auto !important;
+    overflow-y: auto !important;
+    overflow-x: auto !important;
+  }
+  
+  /* Fix for macOS title bar overlay issues */
+  body::before,
+  body::after {
+    display: none !important;
+    pointer-events: none !important;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-zinc-900;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-zinc-700 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-zinc-600;
+  }
+
+  /* Thin scrollbar variant */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thumb-zinc-700::-webkit-scrollbar-thumb {
+    @apply bg-zinc-700 rounded-full;
+  }
+
+  .scrollbar-thumb-zinc-600:hover::-webkit-scrollbar-thumb {
+    @apply bg-zinc-600;
+  }
+
+  .scrollbar-track-transparent::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 bg-accent-500 hover:bg-accent-600 text-white font-medium rounded-lg 
+           transition-all duration-200 ease-out
+           focus:outline-none focus:ring-2 focus:ring-accent-500 focus:ring-offset-2 focus:ring-offset-zinc-950
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 font-medium rounded-lg 
+           transition-all duration-200 ease-out border border-zinc-700
+           focus:outline-none focus:ring-2 focus:ring-zinc-600 focus:ring-offset-2 focus:ring-offset-zinc-950
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-ghost {
+    @apply px-4 py-2 hover:bg-zinc-800/50 text-zinc-400 hover:text-zinc-100 font-medium rounded-lg 
+           transition-all duration-200 ease-out
+           focus:outline-none focus:ring-2 focus:ring-zinc-700 focus:ring-offset-2 focus:ring-offset-zinc-950;
+  }
+
+  .card {
+    @apply bg-zinc-900/50 border border-zinc-800 rounded-xl backdrop-blur-sm;
+  }
+
+  .card-hover {
+    @apply hover:bg-zinc-800/50 hover:border-zinc-700 transition-colors duration-150;
+    will-change: auto;
+  }
+
+  .input-field {
+    @apply w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-zinc-100
+           placeholder:text-zinc-500
+           focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent
+           transition-all duration-200;
+  }
+
+  .select-field {
+    @apply w-full px-3 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-zinc-100
+           focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-transparent
+           transition-all duration-200 cursor-pointer;
+  }
+
+  .label {
+    @apply text-sm font-medium text-zinc-400 mb-1.5 block;
+  }
+
+  .dropzone {
+    @apply border-2 border-dashed border-zinc-700 rounded-xl p-8
+           hover:border-accent-500 hover:bg-accent-500/5
+           transition-all duration-300 ease-out cursor-pointer
+           flex flex-col items-center justify-center gap-3;
+  }
+
+  .dropzone-active {
+    @apply border-accent-500 bg-accent-500/10;
+  }
+
+  .nav-link {
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg text-zinc-400 
+           hover:text-zinc-100 hover:bg-zinc-800/50 
+           transition-colors duration-150;
+    will-change: auto;
+  }
+
+  .nav-link-active {
+    @apply text-accent-400 bg-accent-500/10 hover:bg-accent-500/15;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-accent-400 to-teal-300 bg-clip-text text-transparent;
+  }
+
+  .glow {
+    box-shadow: 0 0 20px rgba(20, 184, 166, 0.15),
+                0 0 40px rgba(20, 184, 166, 0.1);
+  }
+
+  .glass {
+    @apply bg-zinc-900/30 backdrop-blur-xl border border-zinc-800/50;
+  }
+}
+
+/* Grid pattern background */
+.bg-grid {
+  background-image: 
+    linear-gradient(rgba(63, 63, 70, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(63, 63, 70, 0.1) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Radial gradient overlay */
+.bg-radial-gradient {
+  background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(20, 184, 166, 0.15), transparent);
+}
+
+/* macOS scroll fix */
+@supports (-webkit-overflow-scrolling: touch) {
+  body {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+

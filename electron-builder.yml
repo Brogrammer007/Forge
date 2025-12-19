@@ -1,0 +1,98 @@
+# Electron Builder Configuration
+# https://www.electron.build/configuration/configuration
+
+appId: com.vectorforge.app
+productName: VectorForge
+copyright: Copyright © 2025 Vuk. All rights reserved.
+
+# Directories
+directories:
+  output: dist-electron
+  buildResources: build
+
+# Files to include in the package
+files:
+  # .next is excluded from asar, copied via extraResources
+  - public/**/*
+  - electron/**/*.js
+  - electron/**/*.html
+  - node_modules/**/*
+  - package.json
+  - "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}"
+  - "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}"
+  - "!**/node_modules/.bin"
+  - "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}"
+  - "!.editorconfig"
+  - "!**/._*"
+  - "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}"
+
+# Extra files to copy (outside asar)
+
+# Asset resources
+asarUnpack:
+  - "node_modules/sharp/**/*"
+  - "node_modules/potrace/**/*"
+  - "node_modules/canvas/**/*"
+
+# Windows configuration
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: public/icon.png
+  artifactName: ${productName}-${version}-${arch}.${ext}
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  installerIcon: public/icon.png
+  uninstallerIcon: public/icon.png
+  installerHeaderIcon: public/icon.png
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: VectorForge
+
+# macOS configuration
+mac:
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+  icon: public/icon.icns
+  category: public.app-category.graphics-design
+  artifactName: ${productName}-${version}-${arch}.${ext}
+  darkModeSupport: true
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+
+dmg:
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: link
+      path: /Applications
+  window:
+    width: 540
+    height: 380
+
+# Linux configuration
+linux:
+  target:
+    - target: AppImage
+      arch:
+        - x64
+  icon: public/icon.png
+  category: Graphics
+  artifactName: ${productName}-${version}-${arch}.${ext}
+
+# Publish configuration (optional)
+publish:
+  provider: generic
+  url: https://example.com/updates
+
